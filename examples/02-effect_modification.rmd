@@ -1,0 +1,39 @@
+---
+title: "Example: effect modification"
+author: Dzjon Hessing
+output: github_document
+---
+
+```{r include=F}
+library(tidyverse)
+library(pcalg)
+library(Rgraphviz)
+```
+```{r}
+set.seed(42)
+n <- 1000
+data <- tibble(
+  X = rnorm(n),
+  M = 1 + rnorm(n),
+  Y = X - X*M + rnorm(n)
+)
+
+data %>%
+  ggplot(aes(x = X, y = Y)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
+  ggtitle('Y ~ X')
+
+data %>%
+  ggplot(aes(x = X, y = Y, color = M > 0)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
+  ggtitle('Y ~ X by M')
+
+pc(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01,
+   verbose = T) %>%
+  plot
+```

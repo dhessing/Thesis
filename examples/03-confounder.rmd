@@ -1,0 +1,73 @@
+---
+title: "Example: confounder"
+author: Dzjon Hessing
+output: github_document
+---
+
+```{r include=F}
+library(tidyverse)
+library(pcalg)
+library(Rgraphviz)
+```
+
+## Confounder
+
+In this example, all edges are dependent because of the confounder.
+The PC algorithm cannot orient the edges because the two causes are also dependent (no immorality).
+```{r}
+set.seed(42)
+n <- 1000
+data <- tibble(
+  C = rnorm(n),
+  X = C + rnorm(n),
+  Y = C + 2 * X + rnorm(n)
+)
+
+pc(suffStat = list(C = cor(data), n = nrow(data)),
+   indepTest = CIprint(gaussCItest),
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+```
+
+## Removing an edge
+
+Using interaction effects, we can create a new SCM and remove a correlation between two features.
+This way we can, for example, remove edge $cy$:
+```{r}
+set.seed(42)
+n <- 1000
+data <- tibble(
+  C = rnorm(n),
+  X = C + rnorm(n, 1),
+  Y = C + X - 2 * C * X + rnorm(n)
+)
+```
+$Y = C + X - 2CX =$
+
+$C + (1 + C) - 2C(1 + C) =$
+
+$1 + 2C - (2C + 2C^2) =$
+
+$1 + 2C - 2C - 2C^2 =$
+
+$1 - 2C^2$
+
+```{r}
+data %>%
+  ggplot(aes(x = C, y = Y)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = y ~ x, se = FALSE)
+
+skeleton(list(C = cor(data), n = nrow(data)),
+         indepTest = CIprint(gaussCItest),
+         labels = colnames(data),
+         alpha = 0.01) %>%
+  plot
+
+pc(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+```
