@@ -1,0 +1,49 @@
+---
+title: "Four variable example"
+output: html_notebook
+---
+
+```{r include=F}
+library(tidyverse)
+library(pcalg)
+library(Rgraphviz)
+```
+
+## Adding an edge
+```{r}
+set.seed(42)
+n <- 1000
+data <- tibble(
+  A = rnorm(n),
+  B = rnorm(n),
+  M = A * B + rnorm(n),
+  Y = A + B + A * B + rnorm(n)
+)
+
+pc(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+
+cor(data)
+```
+```{r}
+data %>%
+  ggplot(aes(x = M, y = Y)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
+  ggtitle('Y ~ X')
+
+data %>%
+  ggplot(aes(x = A, y = M)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
+  ggtitle('M ~ A')
+
+data %>%
+  ggplot(aes(x = B, y = M)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
+  ggtitle('Y ~ B')
+```

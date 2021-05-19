@@ -1,7 +1,6 @@
 ---
 title: "Example: effect modification"
-author: Dzjon Hessing
-output: github_document
+output: html_document
 ---
 
 ```{r include=F}

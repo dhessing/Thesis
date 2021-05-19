@@ -1,0 +1,115 @@
+---
+title: "Putting it together"
+output: html_notebook
+---
+
+```{r include=F}
+library(tidyverse)
+library(pcalg)
+library(Rgraphviz)
+```
+
+## Adding and removing edges
+
+The previous examples gives us a grammar of how interaction effects can change a DAG.
+```{r}
+set.seed(42)
+n <- 1000
+data <- tibble(
+  B = rnorm(n),
+  C = rnorm(n),
+  A = 1 + rnorm(n),
+  D = rnorm(n),
+  X = rnorm(n),
+  Y = C + X + rnorm(n)
+)
+
+skeleton(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+
+# Creates edge dc using interactions
+data <- tibble(
+  A = rnorm(n),
+  B = rnorm(n),
+  C = 1 + rnorm(n),
+  D = A * B + rnorm(n),         # Adding A * B
+  X = rnorm(n),
+  Y = C + X + A * B + rnorm(n)  # Adding A * B
+)
+
+skeleton(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+
+# Removes edge xy by cancelling main effect
+data <- tibble(
+  A = rnorm(n),
+  B = rnorm(n),
+  C = 1 + rnorm(n),
+  D = A * B + rnorm(n),
+  X = rnorm(n),
+  Y = C + X + A * B - C * X + rnorm(n) # Subtracting C * X
+)
+
+skeleton(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+```
+
+# Reordering
+```{r}
+set.seed(42)
+data <- tibble(
+  A = rnorm(n),
+  B = rnorm(n),
+  C = 1 + rnorm(n),
+  D = rnorm(n),
+  X = rnorm(n),
+  Y = C + X + rnorm(n)
+)
+
+skeleton(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+
+# Removes xy by cancelling main effect
+data <- tibble(
+  A = rnorm(n),
+  B = rnorm(n),
+  C = 1 +  rnorm(n),
+  D = rnorm(n),
+  X = rnorm(n),
+  Y = C + X - C * X + rnorm(n)  # removing C * X
+)
+
+skeleton(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+
+# Adds cd using interaction effects
+data <- tibble(
+  A = rnorm(n),
+  B = rnorm(n),
+  C = 1 + A * B + rnorm(n),     # adds A*B
+  D = A * B + rnorm(n),         # adds A*B
+  X = rnorm(n),
+  Y = C + X - C * X + rnorm(n)
+)
+
+skeleton(list(C = cor(data), n = nrow(data)),
+   indepTest = gaussCItest,
+   labels = colnames(data),
+   alpha = 0.01) %>%
+  plot
+```

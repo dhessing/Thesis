@@ -106,7 +106,7 @@
         <entry key="file://$PROJECT_DIR$/examples/01-no_main_effects.rmd">
           <value>
             <RMarkdownRenderProfile>
-              <option name="lastOutput" value="$PROJECT_DIR$/examples/01-no_main_effects.md" />
+              <option name="lastOutput" value="$PROJECT_DIR$/examples/01-no_main_effects.html" />
               <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/examples" />
             </RMarkdownRenderProfile>
           </value>
@@ -129,6 +129,7 @@
         <entry key="file://$PROJECT_DIR$/examples/02-effect_modification.rmd">
           <value>
             <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/examples/02-effect_modification.md" />
               <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/examples" />
             </RMarkdownRenderProfile>
           </value>
@@ -183,9 +184,45 @@
             </RMarkdownRenderProfile>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/examples/04-four-variable.rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/examples" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/examples/04-parabola.rmd">
           <value>
             <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/examples" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/examples/05-complicated_example.rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/examples" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/examples/05-putting_it_together.rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/examples" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/examples/06-breaks_anyway.rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/examples" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/examples/07-putting_it_together.rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/examples/07-putting_it_together.nb.html" />
               <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/examples" />
             </RMarkdownRenderProfile>
           </value>

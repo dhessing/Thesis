@@ -1,0 +1,57 @@
+---
+title: "R Notebook"
+author: dzjon
+date: 03/05/2021
+output: html_notebook
+---
+
+```{r include=F}
+library(tidyverse)
+library(pcalg)
+library(Rgraphviz)
+```
+
+```{r}
+n <- 1000
+data <- tibble(
+  A = rnorm(n),
+  C = rnorm(n),
+  X = A + C + A * C + rnorm(n),
+  Y = A + C + X + A * C + rnorm(n)
+)
+
+pc(
+  list(C = cor(data), n = nrow(data)),
+  indepTest = gaussCItest,
+  labels = colnames(data), alpha = 0.01) %>%
+  plot
+```
+
+
+
+
+
+```{r}
+n <- 10000
+data <- tibble(
+  A = rnorm(n, 3),
+  M = rnorm(n, 2),
+  C = rnorm(n, 1),
+  X = A + 2 * C + C * M + rnorm(n),
+  Y = A + 3 * C + 0.5 * X + rnorm(n)
+)
+data.pcdag <- pc(list(C = cor(data), n = nrow(data)),
+                 indepTest = gaussCItest,
+                 labels = colnames(data), alpha = 0.01)
+plot(data.pcdag)
+```
+```{r}
+print.coef(lm(Y ~ X, data))
+```
+
+```{r}
+print.coef(lm(Y ~ X + M, data))
+```
+```{r}
+print.coef(lm(Y ~ X + C + C:M, data))
+```
